@@ -1,0 +1,8 @@
+telethon
+psycopg2-binary
+sqlalchemy
+pika
+dash
+pandas
+black
+deep-translator
