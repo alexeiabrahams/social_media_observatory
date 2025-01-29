@@ -114,7 +114,14 @@ def get_seed_list_preview(my_seed_list_names: list[str]) -> list[dict]:
 
 
 def get_seed_channel_metadata(seed_list_names: list[str]) -> list[dict]:
-    return fetch_seed_metadata_full(seed_list_names)
+    records = fetch_seed_metadata_full(seed_list_names)
+
+    # Remove private fields:
+    private_fields = ["api_response", "checkup_time", "data_source"]
+    for private_field in private_fields:
+        [record.pop(private_field) for record in records]
+
+    return records
 
 
 def get_birth_chart_data(
@@ -140,7 +147,12 @@ def get_top_messages(
     seed_list_names: list[str],
     the_limit: int = 1000,
 ):
-    return fetch_top_messages(seed_list_names, start_date, end_date, the_limit)
+    records = fetch_top_messages(seed_list_names, start_date, end_date, the_limit)
+
+    # Remove api_response field
+    [record.pop("api_response") for record in records]
+
+    return records
 
 
 def generate_markdown_hyperlink(record):
